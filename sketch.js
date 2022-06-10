@@ -13,12 +13,34 @@ var chao;
 var corda;
 var melancia;
 var juntar;
+var coelho;
+var coelho_img;
+var mutebutton;
+var melancia_img;
+var background_img;
+var cortar;
+
+
+function preload(){
+  coelho_img = loadImage("Rabbit-01.png");
+  mutebutton = loadImage("mute.png");
+  melancia_img = loadImage("melon.png");
+  background_img = loadImage("background.png");
+}
 
 function setup() 
 {
   createCanvas(500,700);
   engine = Engine.create();
   world = engine.world;
+
+  coelho = createSprite(250,600,100,100);
+  coelho.addImage(coelho_img);
+  coelho.scale = 0.3;
+  cortar = createImg("cut_btn.png");
+  cortar.position(220,30);
+  cortar.size(50,50);
+  cortar.mouseClicked(drop);
  
   // Criar o chao
   chao = new Ground(250,690,600,15);
@@ -36,21 +58,28 @@ function setup()
   rectMode(CENTER);
   ellipseMode(RADIUS);
   textSize(50)
+  imageMode(CENTER);
+
 }
 
 function draw() 
 {
-  background(200);
+  image(background_img,width/2,height/2,500,700);
   Engine.update(engine);
 
   fill("green");
 
-  ellipse(melancia.position.x,melancia.position.y,20);
-   
-  chao.show();
+  image(melancia_img,melancia.position.x,melancia.position.y,60,60);
+  
+  //chao.show();
   corda.show();
+  drawSprites();
 }
 
-
+function drop(){
+  juntar.dettach();
+  juntar = null;
+  corda.break();
+}
 
 
